@@ -74,5 +74,3 @@ The endpoints include:
     http://localhost:10050/queryToken (GET Endpoint)
     http://localhost:10050/addToken  (POST Endpoint)
     http://localhost:10050/updateToken  (POST Endpoint)
-
-# CordaReferenceProject
