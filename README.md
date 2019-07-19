@@ -3,7 +3,9 @@ Reference project for good practices used in Corda.
 
 Corda Blockchain generally follows the following Architecture structure:
 
-![Corda Architecture](./images/Architecture.png?raw=true "Corda Architecture")
+<p align="center">
+  <img src="./images/Architecture.PNG" alt="Blockchain Architecture" width="500" />
+</p>
 
 In this project we will tackle the Blockchain layer and Blockchain API layer. The Blockchain layer is coded in Kotlin language and API in Springboot.
 
