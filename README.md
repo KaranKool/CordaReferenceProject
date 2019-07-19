@@ -7,7 +7,54 @@ Corda Blockchain generally follows the following Architecture structure:
   <img src="Architecture.PNG" alt="Blockchain Architecture" width="500" />
 </p>
 
-In this project we will tackle the Blockchain layer and Blockchain API layer. The Blockchain layer is coded in Kotlin language and API in Springboot.
+In this project we will tackle the Blockchain layer and Blockchain API layer. The Blockchain layer is coded in Kotlin language and API in Springboot. The project contains a single node which interacts with the PostgreSQL DB through the corda flows. **No State or Contract is initiated in this Project**. The project also contains web apis for creating, updating and querying in the db.
+
+## Running the nodes
+
+See https://docs.corda.net/tutorial-cordapp.html#running-the-example-cordapp.
+
+## Interacting with the nodes
+
+### Shell
+
+When started via the command line, each node will display an interactive shell:
+
+    Welcome to the Corda interactive shell.
+    Useful commands include 'help' to see what is available, and 'bye' to shut down the node.
+
+    Tue Nov 06 11:58:13 GMT 2018>>>
+
+You can use this shell to interact with your node.
+You can find out more about the node shell [here](https://docs.corda.net/shell.html).
+
+### Webserver
+
+`clients/src/main/kotlin/com/flowdb/webserver/` defines a simple Spring webserver that connects to a node via RPC and
+allows you to interact with the node over HTTP.
+
+The API endpoints are defined here:
+
+     clients/src/main/kotlin/com/flowdb/webserver/Controller.kt
+
+#### Running the webserver
+
+##### Via the command line
+
+Run the `runTemplateServer` Gradle task. By default, it connects to the node with RPC address `localhost:10006` with
+the username `user1` and the password `test`, and serves the webserver on port `localhost:10050`.
+
+##### Via IntelliJ
+
+Run the `Run Template Server` run configuration. By default, it connects to the node with RPC address `localhost:10006`
+with the username `user1` and the password `test`, and serves the webserver on port `localhost:10050`.
+
+#### Interacting with the webserver
+
+The endpoints include:
+
+    http://localhost:10050/queryToken (GET Endpoint)
+    http://localhost:10050/addToken  (POST Endpoint)
+    http://localhost:10050/updateToken  (POST Endpoint)
 
 ## Logging
 
