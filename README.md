@@ -3,7 +3,7 @@ Reference project for good practices used in Corda.
 
 Corda Blockchain generally follows the following Architecture structure:
 
-![Alt text](./Architecture.png?raw=true "Corda Architecture")
+![Corda Architecture](./Architecture.png?raw=true "Corda Architecture")
 
 In this project we will tackle the Blockchain layer and Blockchain API layer. The Blockchain layer is coded in Kotlin language and API in Springboot.
 
@@ -13,7 +13,7 @@ Logging is a ubiquitous need in programming. While apparently a simple idea (jus
 
 Here is Kotlin’s logging story.
 
-First we need to include the necessay dependencies. The below is and example of Log4J but the same patterns and solutions apply to SLF4J, JUL, and other logging libraries.
+First we need to include the necessary dependencies. The below is and example of Log4J but the same patterns and solutions apply to SLF4J, JUL, and other logging libraries.
 
 ```gradle
 dependencies {
@@ -116,4 +116,4 @@ private fun queryTokenFun(req: RequestEntity<TokenModel>): ResponseEntity<Any> {
         // Put code here...
     }
 ```
-Herer the example follows the springboot method of creating enpoints. We generally create structure models to accept input and generate output to make it more structurally uniform.
+Here the example follows the springboot method of creating endpoints. We generally create structure models to accept input and generate output to make it more structurally uniform.
