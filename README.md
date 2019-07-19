@@ -8,7 +8,7 @@ Corda Blockchain generally follows the following Architecture structure:
 In this project we will tackle the Blockchain layer and Blockchain API layer. The Blockchain layer is coded in Kotlin language and API in Springboot.
 
 ## Logging
-----
+
 Logging is a ubiquitous need in programming. While apparently a simple idea (just print stuff!), there are many ways to do it. In fact, every language, operating system and environment has its own idiomatic and sometimes idiosyncratic logging solution; often, actually, more than one.
 
 Here is Kotlin’s logging story.
@@ -40,7 +40,7 @@ fun loggingExample(s: String) {
 ```
 
 ## Exception Handling
----
+
 All exception classes in Kotlin are descendants of the class Throwable. Every exception has a message, stack trace and an optional cause.<br>
 To throw an exception object, use the throw-expression:
 ``` Kotlin
@@ -60,7 +60,7 @@ finally {
 ```
 
 ## Database connection
----
+
 Corda uses H2 Database by default as its DB to maintain the Node vaults and all the data in the flows and states. Nodes can also be configured to use PostgreSQL and SQL Server.
 
 ### PostgreSQL
@@ -92,13 +92,13 @@ jarDirs = ["[FULL_PATH]/sqljdbc_6.2/enu/"]
 ```
 
 ## Database operations
----
+
 Database operations are done by creating 2 service layers. First is used to query statements to the DB so the operations can be executed. Second is to connect the flows to db service layer. The DB service layer code is a standard code and can be used directly. The second layer needs to be configured according to project and must create the query statement the will be executed in the DB.
 
 Examples of these can be found in the DatabaseService.kt and CryptoValuesDatabaseService.kt files in the reference project 
 
 ## Rest API definition/creation
----
+
 To execute anything on the Corda network from client we need to create apis for the network. RPC opertaions are done by using the rpcOps from the corda core dependencies. 
 
 First we need to establish a connection to node using a valid RPC login.
