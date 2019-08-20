@@ -38,6 +38,15 @@ class CryptoValuesDatabaseService(services: ServiceHub) : DatabaseService(servic
         log.info("Token $token updated in crypto_values table.")
     }
 
+    fun deleteTokenValue(token: String) {
+        val query = "delete from $TABLE_NAME where token = ?"
+
+        val params = mapOf(1 to token)
+
+        executeUpdate(query, params)
+        log.info("Token $token deleted from $TABLE_NAME table.")
+    }
+
     /**
      * Retrieves the value of a crypto token in the table of crypto values.
      */
@@ -46,7 +55,7 @@ class CryptoValuesDatabaseService(services: ServiceHub) : DatabaseService(servic
 
         val params = mapOf(1 to token)
 
-        val results = executeQuery(query, params) { it -> it.getInt("value") }
+        val results = executeQuery(query, params) { it.getInt("value") }
 
         if (results.isEmpty()) {
             throw IllegalArgumentException("Token $token not present in database.")

@@ -1,10 +1,6 @@
 package com.flowdb.webserver
 
-import com.flowdb.AddTokenValueFlow
-import com.flowdb.QueryTokenValueFlow
-import com.flowdb.TokenModel
-import com.flowdb.UpdateTokenValueFlow
-import net.corda.core.concurrent.match
+import com.flowdb.*
 import net.corda.core.messaging.FlowHandle
 import net.corda.core.utilities.getOrThrow
 import org.slf4j.LoggerFactory
@@ -27,31 +23,31 @@ class Controller(rpc: NodeRPCConnection) {
 
     private val proxy = rpc.proxy
 
-    @GetMapping(value = ["/queryToken"], produces = arrayOf("application/json"))
+    @GetMapping(value = ["/queryToken"], produces = ["application/json"])
     private fun queryTokenFun(req: RequestEntity<TokenModel>): ResponseEntity<Any> {
         logger.info("Accessing api for Querying Token In DB")
         val flowHandle: FlowHandle<Int> =proxy.startFlowDynamic(
             QueryTokenValueFlow::class.java,
             req.body.tokenName
         )
-        try{
+        return try{
             val res = flowHandle.use { flowHandle.returnValue.getOrThrow() }
             val result = TokenModel(req.body.tokenName,res)
             logger.info("Query Successful for Token:"+req.body.tokenName)
-            return ResponseEntity
+            ResponseEntity
                     .status(HttpStatus.OK)
                     .body(result)
         }
         catch (e:Throwable){
             logger.error(e.message)
-            return ResponseEntity
+            ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(e.message)
         }
 
     }
 
-    @PostMapping(value = ["/addToken"], produces = arrayOf("application/json"))
+    @PostMapping(value = ["/addToken"], produces = ["application/json"])
     private fun addTokenToDB(req: RequestEntity<TokenModel>): ResponseEntity<String> {
         logger.info("Accessing api for Adding Token to DB")
         val flowHandle = proxy.startFlowDynamic(
@@ -66,7 +62,7 @@ class Controller(rpc: NodeRPCConnection) {
                 .body("Token:${req.body.tokenName} with Value:${req.body.tokenValue} successfully added to DB")
     }
 
-    @PostMapping(value = ["/updateToken"], produces = arrayOf("application/json"))
+    @PostMapping(value = ["/updateToken"], produces = ["application/json"])
     private fun updateTokeInDB(req: RequestEntity<TokenModel>): ResponseEntity<String> {
         logger.info("Accessing api for Updating Token to DB")
         val flowHandle = proxy.startFlowDynamic(
@@ -79,5 +75,19 @@ class Controller(rpc: NodeRPCConnection) {
         return ResponseEntity
                 .status(201)
                 .body("Token:${req.body.tokenName} with Value:${req.body.tokenValue} successfully updated to DB")
+    }
+
+    @PostMapping(value = ["/deleteToken"], produces = ["application/json"])
+    private fun deleteTokenToDB(req: RequestEntity<TokenModel>): ResponseEntity<String> {
+        logger.info("Accessing api for Deleting Token to DB")
+        val flowHandle = proxy.startFlowDynamic(
+                DeleteTokenValueFlow::class.java,
+                req.body.tokenName
+        )
+        flowHandle.use { flowHandle.returnValue.getOrThrow() }
+        logger.info("Token:${req.body.tokenName} successfully deleted from DB")
+        return ResponseEntity
+                .status(201)
+                .body("Token:${req.body.tokenName} successfully deleted from DB")
     }
 }

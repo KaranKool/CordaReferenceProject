@@ -36,6 +36,19 @@ class UpdateTokenValueFlow(private val token: String, private val value: Int) : 
 
 @InitiatingFlow
 @StartableByRPC
+class DeleteTokenValueFlow(private val token: String)   : FlowLogic<Unit>() {
+    override val progressTracker: ProgressTracker = ProgressTracker()
+
+    @Suspendable
+    override fun call() {
+        val databaseService = serviceHub.cordaService(CryptoValuesDatabaseService::class.java)
+        return databaseService.deleteTokenValue(token)
+    }
+}
+
+
+@InitiatingFlow
+@StartableByRPC
 class QueryTokenValueFlow(private val token: String) : FlowLogic<Int>() {
     override val progressTracker: ProgressTracker = ProgressTracker()
 
