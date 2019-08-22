@@ -72,7 +72,7 @@ class CryptoValuesDatabaseService(services: ServiceHub) : DatabaseService(servic
     private fun setUpStorage() {
         val query = """
             create table if not exists $TABLE_NAME(
-                token varchar(64),
+                token varchar(64) unique,
                 value int
             )"""
 

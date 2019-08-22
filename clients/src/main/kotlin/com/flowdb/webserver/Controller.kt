@@ -55,11 +55,19 @@ class Controller(rpc: NodeRPCConnection) {
             req.body.tokenName,
             req.body.tokenValue
         )
-        flowHandle.use { flowHandle.returnValue.getOrThrow() }
-        logger.info("Token:${req.body.tokenName} with Value:${req.body.tokenValue} successfully added to DB")
-        return ResponseEntity
-                .status(201)
-                .body("Token:${req.body.tokenName} with Value:${req.body.tokenValue} successfully added to DB")
+        return try{
+            flowHandle.use { flowHandle.returnValue.getOrThrow() }
+            logger.info("Token:${req.body.tokenName} with Value:${req.body.tokenValue} successfully added to DB")
+            ResponseEntity
+                    .status(201)
+                    .body("Token:${req.body.tokenName} with Value:${req.body.tokenValue} successfully added to DB")
+        }
+        catch(e:Throwable){
+            logger.error(e.message)
+            ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.message)
+        }
     }
 
     @PostMapping(value = ["/updateToken"], produces = ["application/json"])
