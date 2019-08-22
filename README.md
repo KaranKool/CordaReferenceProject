@@ -245,3 +245,5 @@ private fun queryTokenFun(req: RequestEntity<TokenModel>): ResponseEntity<Any> {
 ```
 Here the example follows the springboot method of creating endpoints. We generally create structure models to accept 
 input and generate output to make it more structurally uniform.
+
+Refer file: _com/flowdb/Client.kt_ and _com/flowdb/webserver/NodeRPCConnection.kt_
